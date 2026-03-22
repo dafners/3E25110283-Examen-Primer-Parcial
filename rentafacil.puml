@@ -1,0 +1,120 @@
+@startuml rentafacil
+
+class SistemaRenta {
+    - Cliente cliente[]
+    - Vehiculo vehiculo[]
+    - Alquiler alquiler[]
+}
+
+class Registro {
+    + AgregarCliente(cliente)
+    + AgregarVehiculo(vehiculo)
+    + Alquiler : RegistrarAlquiler(cliente, vehiculo)
+    + FinalizarAlquiler()
+}
+
+class Cliente {
+    - Alquiler alquiler[3]
+    - ID id
+    - Nombre nombre
+    - DNI dni
+    - NumeroTelefono numerotelefono
+}
+
+class ID
+class Nombre
+class DNI
+class NumeroTelefono
+
+class Alquiler {
+    - CodigoAlquiler codigoAlquiler
+    - FechaInicio fechaInicio
+    - FechaFin fechaFin
+    - CostoTotal costoTotal
+    - EstadoAlquiler estadoAlquiler
+    - Vehiculo vehiculo[]
+    - Cliente cliente
+    + Alquiler : Rentar(cliente)
+}
+
+class CodigoAlquiler
+
+class Vehiculo {
+    - NumeroPlaca numeroplaca
+    - Marca marca
+    - Modelo modelo
+    - AñoFabricacion añofabricacion
+    - PrecioDia precioDia
+    - EstadoVehiculo estadoVehiculo
+    + Vehiculo : ObtenerVehiculo()
+}
+
+class NumeroPlaca
+class Marca
+class Modelo
+class AñoFabricacion
+class PrecioDia
+class Auto
+
+class Moto {
+    - Cilindrada cilindrada
+}
+class Camioneta {
+    - CapacidadCarga capacidadCarga
+}
+
+class CostoTotal {
+    - PrecioDia precioDia
+    - DiaAlquilado diaAlquilado
+    + Calcular()
+}
+
+class FechaInicio
+class FechaFin
+class EstadoAlquiler
+class EstadoVehiculo
+class DiaAlquilado
+class Cilindrada
+class CapacidadCarga
+
+
+Auto      --|> Vehiculo
+Moto      --|> Vehiculo
+Camioneta --|> Vehiculo
+
+
+SistemaRenta "1" *-- "0..*" Cliente
+SistemaRenta "1" *-- "0..*" Vehiculo
+SistemaRenta "1" *-- "0..*" Alquiler
+SistemaRenta "1" o-- "1" Registro
+
+Alquiler "1" *-- "1"   CodigoAlquiler
+Alquiler "1" *-- "1"   FechaInicio
+Alquiler "1" *-- "1"   FechaFin
+Alquiler "1" *-- "1"   CostoTotal
+Alquiler "1" *-- "1"   EstadoAlquiler
+Alquiler "1" *-- "1..*" Vehiculo
+Alquiler "1" *-- "1"   Cliente
+Alquiler "1" o-- "1..2" Vehiculo
+
+Vehiculo "1" *-- "1" PrecioDia
+Vehiculo "1" *-- "1" EstadoVehiculo
+Vehiculo "1" *-- "1" NumeroPlaca
+Vehiculo "1" *-- "1" Marca
+Vehiculo "1" *-- "1" Modelo
+Vehiculo "1" *-- "1" AñoFabricacion
+
+Moto "1" *-- "1" Cilindrada
+
+Camioneta "1" *-- "1" CapacidadCarga
+
+CostoTotal "1" *-- "1" PrecioDia
+CostoTotal "1" *-- "1" DiaAlquilado
+
+Cliente "1" o-- "1..3" Alquiler
+Cliente "1" *-- "1" ID
+Cliente "1" *-- "1" Nombre
+Cliente "1" *-- "1" DNI
+Cliente "1" *-- "1" NumeroTelefono
+
+@enduml
